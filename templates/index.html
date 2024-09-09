@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Manager</title>
+	<link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h1>Task Manager</h1>
+    
+    <h2>Add Task</h2>
+    <form action="/add" method="POST">
+        <input type="text" name="title" placeholder="Title" required>
+        <textarea name="description" placeholder="Description"></textarea>
+
+        <label for="start_date">Start Date</label>
+        <input type="date" name="start_date" required>
+
+        <label for="end_date">End Date (optional)</label>
+        <input type="date" name="end_date">
+
+        <label for="assigned_to">Assigned To</label>
+        <select name="assigned_to">
+            <option value="Sanjay">Sanjay</option>
+            <option value="Sagnik">Sagnik</option>
+            <option value="Soubarna">Soubarna</option>
+        </select>
+
+        <label for="status">Status</label>
+        <select name="status">
+            <option value="Pending">Pending</option>
+            <option value="Completed">Completed</option>
+        </select>
+
+        <button type="submit">Add Task</button>
+    </form>
+
+    <h2>Task List</h2>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Assigned To</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for task in tasks %}
+            <tr>
+                <td>{{ task.id }}</td>
+                <td>{{ task.title }}</td>
+                <td>{{ task.description }}</td>
+                <td>{{ task.start_date.strftime('%Y-%m-%d') }}</td>
+                <td>{{ task.end_date.strftime('%Y-%m-%d') if task.end_date else 'N/A' }}</td>
+                <td>{{ task.assigned_to }}</td>
+                <td>{{ task.status }}</td>
+                <td>
+                    <a href="/update/{{ task.id }}">Update</a>
+                    <a href="/delete/{{ task.id }}">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="/report">Generate Report</a>
+</body>
+</html>

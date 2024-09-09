@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Task</title>
+</head>
+<body>
+    <h1>Update Task</h1>
+    
+    <form action="/update/{{ task.id }}" method="POST">
+        <input type="text" name="title" value="{{ task.title }}" required>
+        <textarea name="description">{{ task.description }}</textarea>
+
+        <label for="start_date">Start Date</label>
+        <input type="date" name="start_date" value="{{ task.start_date.strftime('%Y-%m-%d') }}" required>
+
+        <label for="end_date">End Date (optional)</label>
+        <input type="date" name="end_date" value="{{ task.end_date.strftime('%Y-%m-%d') if task.end_date }}">
+
+        <label for="assigned_to">Assigned To</label>
+        <select name="assigned_to">
+            <option value="Sanjay" {% if task.assigned_to == 'Sanjay' %}selected{% endif %}>Sanjay</option>
+            <option value="Sagnik" {% if task.assigned_to == 'Sagnik' %}selected{% endif %}>Sagnik</option>
+            <option value="Soubarna" {% if task.assigned_to == 'Soubarna' %}selected{% endif %}>Soubarna</option>
+        </select>
+
+        <label for="status">Status</label>
+        <select name="status">
+            <option value="Pending" {% if task.status == 'Pending' %}selected{% endif %}>Pending</option>
+            <option value="Completed" {% if task.status == 'Completed' %}selected{% endif %}>Completed</option>
+        </select>
+
+        <label for="completion_date">Completion Date (if completed)</label>
+        <input type="date" name="completion_date" value="{{ task.completion_date.strftime('%Y-%m-%d') if task.completion_date }}">
+
+        <button type="submit">Update Task</button>
+    </form>
+
+    <a href="/">Back to Task List</a>
+</body>
+</html>

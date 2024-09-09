@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Report</title>
+</head>
+<body>
+    <h1>Task Report</h1>
+
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Title</th>
+                <th>Status</th>
+                <th>Assigned To</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Completion Date</th>
+                <th>Time Taken (Days)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for task in report_data %}
+            <tr>
+                <td>{{ task.id }}</td>
+                <td>{{ task.title }}</td>
+                <td>{{ task.status }}</td>
+                <td>{{ task.assigned_to }}</td>
+                <td>{{ task.start_date.strftime('%Y-%m-%d') }}</td>
+                <td>{{ task.end_date.strftime('%Y-%m-%d') if task.end_date else 'N/A' }}</td>
+                <td>{{ task.completion_date.strftime('%Y-%m-%d') if task.completion_date else 'N/A' }}</td>
+                <td>
+                    {% if task.completion_date %}
+                        {{ (task.completion_date - task.start_date).days }}
+                    {% else %}
+                        N/A
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="/">Back to Task List</a>
+</body>
+</html>
